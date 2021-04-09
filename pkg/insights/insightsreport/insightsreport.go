@@ -219,8 +219,13 @@ func updateInsightsMetrics(report SmartProxyReport) {
 	var critical, important, moderate, low, total int
 
 	total = report.Meta.Count
+	disabled := 0
 
 	for _, rule := range report.Data {
+		if rule.Disabled {
+			disabled++
+			continue
+		}
 		switch rule.TotalRisk {
 		case 1:
 			low++
@@ -232,7 +237,7 @@ func updateInsightsMetrics(report SmartProxyReport) {
 			critical++
 		}
 	}
-
+	total = total - disabled
 	insightsStatus.WithLabelValues("low").Set(float64(low))
 	insightsStatus.WithLabelValues("moderate").Set(float64(moderate))
 	insightsStatus.WithLabelValues("important").Set(float64(important))

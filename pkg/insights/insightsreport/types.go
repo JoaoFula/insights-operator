@@ -11,7 +11,8 @@ type ReportResponseMeta struct {
 
 // RuleWithContentResponse represents a single rule in the response of /report endpoint
 type RuleWithContentResponse struct {
-	TotalRisk int `json:"total_risk"`
+	TotalRisk int  `json:"total_risk"`
+	Disabled  bool `json:"disabled"`
 }
 
 // SmartProxyReport represents the response of /report endpoint for smart proxy
